@@ -11,7 +11,7 @@ if settings.MODE == 'DEV':
 elif settings.MODE == 'TEST':
     SQLALCHEMY_DATABASE_URL = settings.TEST_DATABASE_URL
     DATABASE_PARAMS = {'poolclass': NullPool}
-elif settings.MODE == 'DOCKER':
+elif settings.MODE == 'DOCKER_TEST':
     SQLALCHEMY_DATABASE_URL = settings.DOCKER_DATABASE_URL
     DATABASE_PARAMS = {'poolclass': NullPool}
 else:
