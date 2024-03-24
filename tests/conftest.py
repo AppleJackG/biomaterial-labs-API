@@ -12,14 +12,15 @@ from src.auth.utils import auth_utils
     
 @pytest_asyncio.fixture(autouse=True, scope='session')
 async def prepare_database():
-    assert settings.MODE == 'TEST'
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
-    yield
-    # async with engine.begin() as conn:
-    #     await conn.run_sync(Base.metadata.drop_all)
-
+    if settings.MODE == 'TEST' or settings.MODE == 'DOCKER_TEST':
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.drop_all)
+            await conn.run_sync(Base.metadata.create_all)
+        yield
+        # async with engine.begin() as conn:
+        #     await conn.run_sync(Base.metadata.drop_all)
+    else:
+        raise ValueError(f"Not test mode: {settings.MODE}")
 
 @pytest_asyncio.fixture(scope="session")
 async def ac() -> AsyncGenerator[AsyncClient, None]:
