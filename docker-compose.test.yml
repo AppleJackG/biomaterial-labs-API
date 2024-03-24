@@ -24,7 +24,7 @@ services:
     tty: true
     env_file:
       - .env
-    container_name: fastapi_auth_template
+    container_name: biomaterial-labs-API
     depends_on:
       db:
         condition: service_healthy
