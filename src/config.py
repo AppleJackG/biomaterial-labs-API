@@ -7,7 +7,7 @@ load_dotenv(override=True)
 
 
 class Settings(BaseSettings):
-    MODE: Literal["DEV", "TEST", "PROD", "DOCKER"]  
+    MODE: Literal["DEV", "TEST", "PROD", "DOCKER_TEST"]  
 
     DATABASE_URL: str
     TEST_DATABASE_URL: str
