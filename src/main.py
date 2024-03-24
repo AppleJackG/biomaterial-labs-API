@@ -39,7 +39,7 @@ async def home():
         )
     else:
         main_page = (
-            f'<a href="http://127.0.0.1:8000/docs">Documentation</a><br>'
-            f'<a href="http://127.0.0.1:8000/redoc">ReDoc</a>'
+            f'<a href="/docs">Documentation</a><br>'
+            f'<a href="/redoc">ReDoc</a>'
         )
     return main_page

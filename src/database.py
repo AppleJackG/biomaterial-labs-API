@@ -11,10 +11,6 @@ if settings.MODE == 'DEV':
 elif settings.MODE == 'TEST':
     SQLALCHEMY_DATABASE_URL = settings.TEST_DATABASE_URL
     DATABASE_PARAMS = {'poolclass': NullPool}
-elif settings.MODE == 'PROD':
-    settings.POSTGRES_HOST = 'db'
-    SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
-    DATABASE_PARAMS = {}
 else:
     raise ValueError(f"Unknown mode: {settings.MODE}")
 
