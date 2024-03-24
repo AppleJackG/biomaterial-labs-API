@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    container_name: db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+
+  app:
+    build: 
+      context: .
+    env_file:
+      - .env
+    container_name: fastapi_auth_template
+    command: ["/fastapi_auth/docker/app.sh"]
+    ports:
+      - 80:8000
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+
+volumes:
+  db-data:

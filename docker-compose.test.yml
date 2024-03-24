@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    container_name: db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${TEST_POSTGRES_DB}
+      POSTGRES_USER: ${TEST_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${TEST_POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${TEST_POSTGRES_DB} -U $${TEST_POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  app:
+    build: 
+      context: .
+    stdin_open: true 
+    tty: true
+    env_file:
+      - .env
+    container_name: fastapi_auth_template
+    depends_on:
+      db:
+        condition: service_healthy
