@@ -8,6 +8,7 @@ from src.database import Base
 from src.config import settings
 
 from src.auth.models import User
+from src.labs.styrol_polymerization_bulk.models import StyrolPolymerizationBulkORM
 
 
 config = context.config

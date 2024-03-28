@@ -19,9 +19,8 @@ class User(Base):
     is_superuser: Mapped[bool] = mapped_column(default=False)
 
     refresh_token: Mapped[list['RefreshToken']] = relationship(back_populates='user', cascade="all, delete")
-
-    def get_context_string(self, context: str):
-        return f'{context}{str(self.user_id)[-5:]}{self.username[-4:]}{self.email[:6]}{self.user_id[:5]}'.strip()
+    
+    styrol_polymerization_bulk: Mapped[list["StyrolPolymerizationBulkORM"]] = relationship(back_populates="user")
 
     if settings.MODE == 'TEST':
         __mapper_args__ = {

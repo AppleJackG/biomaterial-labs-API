@@ -5,7 +5,7 @@ from .repository import AuthRepository, user_repository, UserRepository, auth_re
 from .models import User
 from typing import NoReturn
 from .utils import auth_utils
-from .schemas import Token, UserCreate, RefreshTokenPayload, UserPatch, UserSchema, UserUpdate, VerifyUserEmailSchema
+from .schemas import Token, UserCreate, UserPatch, UserSchema, UserUpdate
 from .exceptions import InvalidCredentials, InvalidToken, UsernameIsTaken, EmailIsTaken
 from ..config import settings
 from fastapi.security import OAuth2PasswordBearer
