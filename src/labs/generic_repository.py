@@ -1,6 +1,6 @@
 from typing import Generic, Type, TypeVar
 from uuid import UUID
-from sqlalchemy import update, insert
+from sqlalchemy import select, update, insert
 from pydantic import BaseModel
 
 from ..database import Base, session_factory
@@ -27,7 +27,7 @@ class GenericLabRepository(Generic[ModelType, UpdateSchemaType]):
             await session.commit()
         return empty_row_orm
   
-    async def update_lab(self, new_values: list[UpdateSchemaType], user_id: UUID) -> list[ModelType]:
+    async def update_table(self, new_values: list[UpdateSchemaType], user_id: UUID) -> list[ModelType]:
         lab_orm: list[ModelType] = []
         async with session_factory() as session:
             for row in new_values:
@@ -42,4 +42,11 @@ class GenericLabRepository(Generic[ModelType, UpdateSchemaType]):
                 lab_row = result.scalar_one()
                 lab_orm.append(lab_row)
             await session.commit()
+        return lab_orm
+    
+    async def get_table(self, user_id: UUID) -> list[ModelType]:
+        async with session_factory() as session:
+            query = select(self.model).where(self.model.user_id == user_id)
+            result = await session.execute(query)
+            lab_orm = result.scalars()
         return lab_orm

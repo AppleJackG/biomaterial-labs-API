@@ -22,16 +22,18 @@ async def create_empty_row(
 
 
 @router.patch('/update')
-async def update_styrol_polymerization_bulk(
+async def update_table(
     new_values: list[StyrolPolymerizationBulkDTO],
     user: User = Depends(user_service.get_current_user)
 ) -> list[StyrolPolymerizationBulkDTO]:
-    lab_dto = await styrol_polymerization_bulk_service.update_styrol_polymerization_bulk(
+    lab_dto = await styrol_polymerization_bulk_service.update_table(
         new_values,
         user
     )
     return lab_dto
 
 
-#TODO добавить роут для добавления ряда в таблице
-# по факту, когда пользователь создает пустой ряд на сайте, должен создаться пустой ряд в таблице 
+@router.get('/get')
+async def get_table(user: User = Depends(user_service.get_current_user)) -> list[StyrolPolymerizationBulkDTO]:
+    lab_dto = await styrol_polymerization_bulk_service.get_table(user)
+    return lab_dto

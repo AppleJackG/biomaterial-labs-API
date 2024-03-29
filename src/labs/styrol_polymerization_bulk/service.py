@@ -13,15 +13,23 @@ class StyrolPolymerizationService:
         empty_row_dto = StyrolPolymerizationBulkDTO.model_validate(empty_row_orm, from_attributes=True)
         return empty_row_dto
     
-    async def update_styrol_polymerization_bulk(
+    async def update_table(
         self,
         new_values: list[StyrolPolymerizationBulkDTO],
         user: User
     ) -> list[StyrolPolymerizationBulkDTO]:
-        lab_orm = await self.repo.update_lab(new_values, user.user_id)
+        lab_orm = await self.repo.update_table(new_values, user.user_id)
         lab_dto: list[StyrolPolymerizationBulkDTO] = []
         for row in lab_orm:
             lab_dto.append(StyrolPolymerizationBulkDTO.model_validate(row, from_attributes=True))
+        return lab_dto
+    
+    async def get_table(self, user: User) -> list[StyrolPolymerizationBulkDTO]:
+        lab_orm = await self.repo.get_table(user.user_id)
+        lab_dto: list[StyrolPolymerizationBulkDTO] = []
+        for row in lab_orm:
+            lab_dto.append(StyrolPolymerizationBulkDTO.model_validate(row, from_attributes=True))
+        lab_dto.sort(key=lambda x: x.number)
         return lab_dto
     
     
