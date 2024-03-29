@@ -8,13 +8,20 @@ class StyrolPolymerizationService:
     def __init__(self, repo: StyrolPolymerizationBulkRepository) -> None:
         self.repo = repo
         
+    async def create_empty_row(self, row_number: int, user: User) -> StyrolPolymerizationBulkDTO:
+        empty_row_orm = await self.repo.create_empty_row(row_number, user.user_id)
+        empty_row_dto = StyrolPolymerizationBulkDTO.model_validate(empty_row_orm, from_attributes=True)
+        return empty_row_dto
+    
     async def update_styrol_polymerization_bulk(
         self,
-        new_values: StyrolPolymerizationBulkDTO,
+        new_values: list[StyrolPolymerizationBulkDTO],
         user: User
-    ) -> StyrolPolymerizationBulkDTO:
+    ) -> list[StyrolPolymerizationBulkDTO]:
         lab_orm = await self.repo.update_lab(new_values, user.user_id)
-        lab_dto = StyrolPolymerizationBulkDTO.model_validate(lab_orm, from_attributes=True)
+        lab_dto: list[StyrolPolymerizationBulkDTO] = []
+        for row in lab_orm:
+            lab_dto.append(StyrolPolymerizationBulkDTO.model_validate(row, from_attributes=True))
         return lab_dto
     
     

@@ -2,20 +2,20 @@ from pydantic import BaseModel, ConfigDict
 
 
 class StyrolPolymerizationBulkDTO(BaseModel):
-    number: int
-    load_monomer_g: float
-    load_monomer_mole: float
-    load_monomer_mole_g: float
-    load_initiator_g: float
-    load_initiator_mole: float
-    load_initiator_mole_g: float
-    temperature: float
-    time: float
-    polymer_yield_g: float
-    polymer_yield_percent: float
-    polymerization_rate_percent: float
-    polymerization_rate_mole: float
-    polymer_characteristics_viscosity: float
-    polymer_characteristics_mol_mass: float
+    number: int | None
+    load_monomer_g: float | None
+    load_monomer_mole: float | None
+    load_monomer_mole_g: float | None
+    load_initiator_g: float | None
+    load_initiator_mole: float | None
+    load_initiator_mole_g: float | None
+    temperature: float | None
+    time: float | None
+    polymer_yield_g: float | None
+    polymer_yield_percent: float | None
+    polymerization_rate_percent: float | None
+    polymerization_rate_mole: float | None
+    polymer_characteristics_viscosity: float | None
+    polymer_characteristics_mol_mass: float | None
     
     model_config = ConfigDict(from_attributes=True)

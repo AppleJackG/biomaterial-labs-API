@@ -12,11 +12,20 @@ router = APIRouter(
 )
 
 
-@router.patch('/update')
-async def update_styrol_polymerization_bulk(
-    new_values: StyrolPolymerizationBulkDTO,
+@router.post('/create_empty_row')
+async def create_empty_row(
+    row_number: int,
     user: User = Depends(user_service.get_current_user)
 ) -> StyrolPolymerizationBulkDTO:
+    lab_dto = await styrol_polymerization_bulk_service.create_empty_row(row_number, user)
+    return lab_dto
+
+
+@router.patch('/update')
+async def update_styrol_polymerization_bulk(
+    new_values: list[StyrolPolymerizationBulkDTO],
+    user: User = Depends(user_service.get_current_user)
+) -> list[StyrolPolymerizationBulkDTO]:
     lab_dto = await styrol_polymerization_bulk_service.update_styrol_polymerization_bulk(
         new_values,
         user
@@ -25,4 +34,4 @@ async def update_styrol_polymerization_bulk(
 
 
 #TODO добавить роут для добавления ряда в таблице
-# по факту, когда пользователь создает пустой ряд на сайте, должен создаться пустой ряд в таблице
+# по факту, когда пользователь создает пустой ряд на сайте, должен создаться пустой ряд в таблице 
