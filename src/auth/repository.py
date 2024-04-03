@@ -1,14 +1,10 @@
-from typing import Any
 from uuid import UUID
 
-from .schemas import UserUpdate
 from .models import User, RefreshToken
 from sqlalchemy import delete, select, insert, update
 from sqlalchemy.orm import joinedload
 from ..database import session_factory
-from pydantic import EmailStr
 from .utils import auth_utils
-from loguru import logger
 from datetime import datetime, timezone
 
 
@@ -67,7 +63,7 @@ class AuthRepository:
 
 
 class UserRepository:
-
+    
     @staticmethod
     async def get_user_by_username(username: str) -> User | None:
         query = select(User).where(User.username == username)
@@ -79,14 +75,6 @@ class UserRepository:
     @staticmethod
     async def get_user_by_id(user_id: UUID) -> User | None:
         query = select(User).where(User.user_id == user_id)
-        async with session_factory() as session:
-            result = await session.execute(query)
-        user = result.scalar_one_or_none()
-        return user
-    
-    @staticmethod
-    async def get_user_by_email(email: EmailStr) -> User | None:
-        query = select(User).where(User.email == email)
         async with session_factory() as session:
             result = await session.execute(query)
         user = result.scalar_one_or_none()

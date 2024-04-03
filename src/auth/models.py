@@ -12,8 +12,10 @@ class User(Base):
 
     user_id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4, unique=True)
     username: Mapped[str] = mapped_column(nullable=False, unique=True)
-    email: Mapped[str] = mapped_column(nullable=True, unique=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    surname: Mapped[str] = mapped_column(nullable=False)
     password: Mapped[bytes] = mapped_column(nullable=False)
+    role: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(default=True)
     is_verified: Mapped[bool] = mapped_column(default=False)
     is_superuser: Mapped[bool] = mapped_column(default=False)

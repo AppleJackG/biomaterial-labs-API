@@ -10,7 +10,9 @@ class UserBase(BaseModel):
 class UserSchema(UserBase):
     user_id: UUID
     username: str
-    email: EmailStr | None
+    name: str
+    surname: str
+    role: str
     is_active: bool
     is_verified: bool 
     is_superuser: bool 
@@ -18,28 +20,32 @@ class UserSchema(UserBase):
 
 class UserCreate(UserBase):
     username: str
+    name: str
+    surname: str
+    role: str
     password: str
-    email: EmailStr | None = None
 
 
 class UserUpdate(UserBase):
     username: str | None = None
-    email: EmailStr | None = None
+    name: str | None = None
+    surname: str | None = None
+    role: str | None = None
 
 
 class UserPatch(UserBase):
     username: str | None = None
-    password: str | None = None
-    email: EmailStr | None = None
+    name: str | None = None
+    surname: str | None = None
+    role: str | None = None
     is_active: bool | None = None
-    is_verified: bool | None = None
-    is_superuser: bool | None = None
+    is_verified: bool  | None = None
+    is_superuser: bool  | None = None
 
 
 class AccessTokenPayload(BaseModel):
     sub: str
     username: str
-    email: EmailStr
     exp: datetime
     iat: datetime
     access_key: str
@@ -62,12 +68,5 @@ class Token(BaseModel):
     refresh_token: str
     token_type: str
     expires_in: int
-
-    model_config = ConfigDict(from_attributes=True)
-
-
-class VerifyUserEmailSchema(BaseModel):
-    token: str
-    email: EmailStr
 
     model_config = ConfigDict(from_attributes=True)

@@ -98,37 +98,13 @@ class UserService:
         user_dict.update(
             {'password': auth_utils.hash_password(user_data.password)}
         )
+        
         user_exists = await self.repo.get_user_by_username(user_dict.get('username'))
         if user_exists:
             raise UsernameIsTaken
-        if email := user_dict.get('email'):
-            user_exists = await self.repo.get_user_by_email(email)
-            if user_exists:
-                raise EmailIsTaken
+        
         new_user = await self.repo.create_new_user(user_dict)
         return new_user
-    
-    async def change_password(
-        self,
-        user: User,
-        old_password: str,
-        new_password: str
-    ) -> User:
-        if not auth_utils.validate_password(old_password, user.password):
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail='Wrong password'
-            )
-        if not auth_utils.check_password_strength(new_password):
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail='Password is too weak'
-            )
-        new_data_dict = {
-            'password': auth_utils.hash_password(new_password)
-        }
-        user = await self.repo.update_user(user.user_id, new_data_dict)
-        return user
     
     async def patch_user(self, user_id: UUID, new_values: UserPatch | UserUpdate) -> User:
         new_data_dict = new_values.model_dump(exclude_unset=True)
