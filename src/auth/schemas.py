@@ -11,6 +11,7 @@ class UserBase(BaseModel):
 class RolesEnum(str, Enum):
     student = 'student'
     teacher = 'teacher'
+    admin = 'admin'
 
 
 class UserSchema(UserBase):
