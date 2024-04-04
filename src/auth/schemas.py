@@ -1,10 +1,16 @@
-from datetime import datetime, timedelta
-from pydantic import BaseModel, EmailStr, ConfigDict
+from datetime import datetime
+from enum import Enum
+from pydantic import BaseModel, ConfigDict
 from uuid import UUID
 
 
 class UserBase(BaseModel):
-    model_config = ConfigDict(from_attributes=True, strict=True)
+    model_config = ConfigDict(from_attributes=True, use_enum_values=True)
+
+
+class RolesEnum(str, Enum):
+    student = 'student'
+    teacher = 'teacher'
 
 
 class UserSchema(UserBase):
@@ -12,7 +18,7 @@ class UserSchema(UserBase):
     username: str
     name: str
     surname: str
-    role: str
+    role: RolesEnum
     is_active: bool
     is_verified: bool 
     is_superuser: bool 
@@ -22,7 +28,7 @@ class UserCreate(UserBase):
     username: str
     name: str
     surname: str
-    role: str
+    role: RolesEnum
     password: str
 
 
@@ -30,14 +36,14 @@ class UserUpdate(UserBase):
     username: str | None = None
     name: str | None = None
     surname: str | None = None
-    role: str | None = None
+    role: RolesEnum | None = None
 
 
 class UserPatch(UserBase):
     username: str | None = None
     name: str | None = None
     surname: str | None = None
-    role: str | None = None
+    role: RolesEnum | None = None
     is_active: bool | None = None
     is_verified: bool  | None = None
     is_superuser: bool  | None = None

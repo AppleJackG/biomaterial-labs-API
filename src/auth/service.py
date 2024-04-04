@@ -75,6 +75,28 @@ class UserService:
             )
         return user
     
+    async def get_current_user_student(self, token: str = Depends(oauth2_scheme)) -> User | NoReturn:
+        payload = auth_utils.decode_token(token)
+        user_id: UUID | None = payload.get('sub')
+        user = await self.repo.get_user_by_id(user_id)
+        if not user.role == 'student':
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail='Access is denied'
+            )
+        return user
+    
+    async def get_current_user_teacher(self, token: str = Depends(oauth2_scheme)) -> User | NoReturn:
+        payload = auth_utils.decode_token(token)
+        user_id: UUID | None = payload.get('sub')
+        user = await self.repo.get_user_by_id(user_id)
+        if not user.role == 'teacher':
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail='Access is denied'
+            )
+        return user
+    
     async def check_admin_rights(self, username: str, password: str) -> bool | NoReturn:
         user = await self.repo.get_user_by_username(username)
         if not user:
@@ -88,7 +110,7 @@ class UserService:
             return True
         return False
     
-    async def register_new_user(self, user_data: UserCreate) -> User | NoReturn:
+    async def add_new_user(self, user_data: UserCreate) -> User | NoReturn:
         if not auth_utils.check_password_strength(user_data.password):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
