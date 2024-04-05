@@ -8,8 +8,8 @@ from ..labs.styrol_polymerization_bulk.models import StyrolPolymerizationBulkORM
 
 
 new_user = UserCreate(
-    username='zhenya',
-    name='Евгений',
+    username='aple',
+    name='Михаил',
     surname='Козлов',
     role='student',
     password='qwertyASD1'
