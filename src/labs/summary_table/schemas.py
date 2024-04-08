@@ -13,6 +13,13 @@ class LabSummaryDTO(BaseModel):
     status_or_mark: LabStatus | float
     
     model_config = ConfigDict(from_attributes=True)
+    
+
+class LabAfterChangeDTO(BaseModel):
+    user_id: UUID
+    styrol_polymerization_bulk: LabStatus | float
+    
+    model_config = ConfigDict(from_attributes=True)
 
 
 class SummaryTableDTO(BaseModel):
