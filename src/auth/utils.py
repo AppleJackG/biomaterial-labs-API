@@ -68,7 +68,9 @@ class AuthUtilities:
         access_token_payload = AccessTokenPayload(
             sub=str(user.user_id),
             username=user.username,
-            email=user.email,
+            name=user.name,
+            surname=user.surname,
+            role=user.role,
             exp=expire_time,
             iat=datetime.now(timezone.utc),
             access_key=str(access_key)

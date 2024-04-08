@@ -31,9 +31,11 @@ async def ac() -> AsyncGenerator[AsyncClient, None]:
 @pytest_asyncio.fixture(scope="function")
 async def user() -> AsyncGenerator[User, None]:
     user = User()
-    user.email = 'user1@example.com'
     user.username = 'test_user'
     user.password = auth_utils.hash_password('qwertyASD1')
+    user.name = 'Олег'
+    user.surname = 'Вацков'
+    user.role = 'student'
     async with session_factory() as session:
         session.add(user)
         await session.commit()
@@ -47,10 +49,12 @@ async def user() -> AsyncGenerator[User, None]:
 @pytest_asyncio.fixture(scope="function")
 async def inactive_user() -> AsyncGenerator[User, None]:
     user = User()
-    user.email = 'user1@example.com'
-    user.username = 'test_user'
+    user.username = 'test_inactive_user'
     user.password = auth_utils.hash_password('qwertyASD1')
+    user.name = 'Олег'
+    user.surname = 'Вацков'
     user.is_active = False
+    user.role = 'student'
     async with session_factory() as session:
         session.add(user)
         await session.commit()
@@ -64,10 +68,12 @@ async def inactive_user() -> AsyncGenerator[User, None]:
 @pytest_asyncio.fixture(scope="function")
 async def super_user() -> AsyncGenerator[User, None]:
     user = User()
-    user.email = 'superuser1@example.com'
     user.username = 'test_superuser'
     user.password = auth_utils.hash_password('qwertyASD1')
+    user.name = 'Олег'
+    user.surname = 'Вацков'
     user.is_superuser = True
+    user.role = 'student'
     async with session_factory() as session:
         session.add(user)
         await session.commit()

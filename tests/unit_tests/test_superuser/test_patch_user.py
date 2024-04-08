@@ -20,4 +20,3 @@ async def test_patch_user(ac: AsyncClient, super_access_token: str, user: User):
     )
     assert response.status_code == 200
     assert response.json()['username'] == 'we_patched_your_name'
-    assert response.json()['email'] == user.email

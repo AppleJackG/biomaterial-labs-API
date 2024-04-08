@@ -9,6 +9,7 @@ from src.config import settings
 
 from src.auth.models import User
 from src.labs.styrol_polymerization_bulk.models import StyrolPolymerizationBulkORM
+from src.labs.summary_table.models import SummaryTableORM
 
 
 config = context.config

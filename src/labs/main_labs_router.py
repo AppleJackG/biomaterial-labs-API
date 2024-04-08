@@ -7,8 +7,8 @@ from .styrol_polymerization_bulk.router import router as router_styrol_polymeriz
 
 router_labs = APIRouter(
     prefix='/labs',
-    tags=['Labs'],
-    dependencies=[Depends(user_service.get_current_user)],
+    # tags=['Labs'],
+    # dependencies=[Depends(user_service.get_current_user)],
 )
 
 router_labs.include_router(router_styrol_polymerization_bulk)

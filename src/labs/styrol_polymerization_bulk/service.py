@@ -1,3 +1,4 @@
+from uuid import UUID
 from .repository import StyrolPolymerizationBulkRepository, styrol_polymerization_bulk_repository
 from .schemas import StyrolPolymerizationBulkDTO
 from ...auth.models import User
@@ -24,8 +25,8 @@ class StyrolPolymerizationService:
             lab_dto.append(StyrolPolymerizationBulkDTO.model_validate(row, from_attributes=True))
         return lab_dto
     
-    async def get_table(self, user: User) -> list[StyrolPolymerizationBulkDTO]:
-        lab_orm = await self.repo.get_table(user.user_id)
+    async def get_table(self, user_id: UUID) -> list[StyrolPolymerizationBulkDTO]:
+        lab_orm = await self.repo.get_table(user_id)
         lab_dto: list[StyrolPolymerizationBulkDTO] = []
         for row in lab_orm:
             lab_dto.append(StyrolPolymerizationBulkDTO.model_validate(row, from_attributes=True))
