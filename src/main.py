@@ -49,5 +49,6 @@ async def home():
         main_page = (
             f'<a href="/docs">Documentation</a><br>'
             f'<a href="/redoc">ReDoc</a>'
+            '<p>Welcome. v.0.0.1</p>'
         )
     return main_page
