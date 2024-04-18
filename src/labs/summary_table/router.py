@@ -27,7 +27,10 @@ async def get_summary_table() -> list[SummaryTableDTO]:
 
 
 @router.patch('/change-lab-status')
-async def change_lab_status(lab_name: LabNamesEn, user: User = Depends(user_service.get_current_user)) -> LabAfterChangeDTO:
+async def change_lab_status(
+    lab_name: LabNamesEn,
+    user: User = Depends(user_service.get_current_user)
+) -> LabAfterChangeDTO:
     changed_lab = await summary_table_service.change_lab_status(user.user_id, lab_name)
     return changed_lab
 

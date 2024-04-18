@@ -9,14 +9,15 @@ from .repository import summary_table_repository
 
 from loguru import logger
 
+
 class SummaryTableService:
     
     def __init__(self, repo: SummaryTableRepository) -> None:
         self.repo = repo
         
     async def add_user_to_summary_table(self, user_id: UUID) -> SummaryTableORM:
-        summaty_table = await self.repo.add_user_to_summary_table(user_id)
-        return summaty_table
+        summary_table = await self.repo.add_user_to_summary_table(user_id)
+        return summary_table
     
     async def get_summary_table(self) -> list[SummaryTableDTO]:
         summary_table_orm_list = await self.repo.get_summary_table()
@@ -39,7 +40,7 @@ class SummaryTableService:
             summary_table_dto_list.append(summary_table_dto)
         return summary_table_dto_list
 
-    async def change_lab_status(self, user_id: UUID, lab_name: LabNamesEn) -> LabStatus:
+    async def change_lab_status(self, user_id: UUID, lab_name: LabNamesEn) -> LabAfterChangeDTO:
         summary_table_orm = await self.repo.get_summary_table_for_user(user_id)
         current_status: str = getattr(summary_table_orm, lab_name.value)
         logger.debug(current_status)
@@ -72,3 +73,21 @@ class SummaryTableService:
     
 
 summary_table_service = SummaryTableService(summary_table_repository)
+
+
+class Car:
+    """This class represents a car object."""
+    def __init__(self, speed=0):
+        self.speed = speed
+        self.odometer = 0
+        self.time = 0
+        # self.passengers = ['Lena', 'Benjamin', 'Tom']
+
+    def say_state(self):
+        """Prints the current speed in kilometers per hour."""
+        print("I'm going {} kph!".format(self.speed))
+
+
+a = Car(10)
+a.say_state()
+

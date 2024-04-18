@@ -102,7 +102,6 @@ class UserRepository:
             user = result.scalar_one()
             await session.commit()
         return user
-    
 
     @staticmethod
     async def delete_user(user_id: UUID) -> None:
