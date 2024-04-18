@@ -33,6 +33,11 @@ class UserCreate(UserBase):
     password: str
 
 
+class UserSignUp(UserBase):
+    username: str
+    password: str
+
+
 class UserUpdate(UserBase):
     username: str | None = None
     name: str | None = None

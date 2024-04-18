@@ -150,6 +150,11 @@ class UserService:
             )
         return user
 
+    async def create_superuser(self, username: str):
+        user = await self.repo.get_user_by_username(username)
+        updated_user = await self.repo.update_user(user.user_id, {'is_superuser': True})
+        return updated_user
+
 
 auth_service = AuthService(auth_repository, user_repository)
 user_service = UserService(user_repository)

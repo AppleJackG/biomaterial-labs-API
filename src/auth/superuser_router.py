@@ -1,9 +1,9 @@
-from typing import Any
+from typing import Any, Dict
 from uuid import UUID
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
-from .schemas import UserPatch, UserSchema
+from .schemas import UserPatch, UserSchema, UserCreate
 from .service import user_service
 
 
@@ -12,6 +12,12 @@ superuser_router = APIRouter(
     tags=['Super user actions'],
     dependencies=[Depends(user_service.get_current_superuser)]
 )
+
+
+@superuser_router.post('/signup')
+async def signup(new_user: UserCreate) -> UserSchema:
+    user = await user_service.add_new_user(new_user)
+    return user
 
 
 @superuser_router.get('/get_users_list', response_model=list[UserSchema])
@@ -33,7 +39,7 @@ async def patch_user(user_id: UUID, new_values: UserPatch) -> Any:
 
 
 @superuser_router.delete('/delete_user/{user_id}')
-async def delete_user(user_id: UUID) -> JSONResponse:
+async def delete_user(user_id: UUID) -> dict[str, str]:
     await user_service.delete_user(user_id)
     return {
         'message': f'user {user_id} deleted'
