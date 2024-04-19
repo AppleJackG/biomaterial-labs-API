@@ -17,7 +17,6 @@ from .labs.summary_table.router import router as router_summary_table
 
 app = FastAPI(
     title="Template",
-    root_path='/api/v1'
 )
 
 admin = Admin(app, engine, authentication_backend=authentication_backend)

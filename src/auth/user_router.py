@@ -10,6 +10,12 @@ from .service import user_service
 user_router = APIRouter(prefix='/users', tags=['Users'])
 
 
+@user_router.post('/signup')
+async def signup(new_user: UserCreate) -> UserSchema:
+    user = await user_service.add_new_user(new_user)
+    return user
+
+
 @user_router.get('/me', response_model=UserSchema)
 async def get_current_user(user: UserSchema = Depends(user_service.get_current_user)) -> Any:
     return user
