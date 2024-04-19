@@ -44,14 +44,9 @@ app.add_middleware(
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
-    if settings.MODE == 'PROD':
-        main_page = (
-            '<p>Welcome to FastAPI template. v.0.1.0</p>'
-        )
-    else:
-        main_page = (
-            f'<a href="/docs">Documentation</a><br>'
-            f'<a href="/redoc">ReDoc</a>'
-            '<p>Welcome. v.0.0.1</p>'
-        )
+    main_page = (
+        f'<a href="/docs">Documentation</a><br>'
+        f'<a href="/redoc">ReDoc</a>'
+        '<p>Welcome. v.0.0.1</p>'
+    )
     return main_page

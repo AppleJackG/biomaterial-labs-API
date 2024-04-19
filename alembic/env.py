@@ -14,7 +14,7 @@ from src.labs.summary_table.models import SummaryTableORM
 
 config = context.config
 
-if settings.MODE == "DOCKER_TEST":
+if settings.MODE == "DOCKER_TEST" or settings.MODE == "PROD":
     config.set_main_option("sqlalchemy.url", settings.DOCKER_DATABASE_URL + "?async_fallback=True")
 else:
     config.set_main_option("sqlalchemy.url", settings.DATABASE_URL + "?async_fallback=True")

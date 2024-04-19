@@ -14,6 +14,9 @@ elif settings.MODE == 'TEST':
 elif settings.MODE == 'DOCKER_TEST':
     SQLALCHEMY_DATABASE_URL = settings.DOCKER_DATABASE_URL
     DATABASE_PARAMS = {'poolclass': NullPool}
+elif settings.MODE == 'PROD':
+    SQLALCHEMY_DATABASE_URL = settings.DOCKER_DATABASE_URL
+    DATABASE_PARAMS = {}
 else:
     raise ValueError(f"Unknown mode: {settings.MODE}")
 
