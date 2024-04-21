@@ -22,7 +22,7 @@ class User(Base):
 
     refresh_token: Mapped[list['RefreshToken']] = relationship(back_populates='user', cascade="all, delete")
     
-    styrol_polymerization_bulk: Mapped[list["StyrolPolymerizationBulkORM"]] = relationship(back_populates="user")
+    styrol_polymerization_bulk: Mapped[list["StyrolPolymerizationBulkORM"]] = relationship(back_populates="user", cascade="all, delete")
 
     if settings.MODE == 'TEST':
         __mapper_args__ = {

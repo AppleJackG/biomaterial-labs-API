@@ -21,7 +21,7 @@ else:
     raise ValueError(f"Unknown mode: {settings.MODE}")
 
 
-engine = create_async_engine(SQLALCHEMY_DATABASE_URL, echo=True, **DATABASE_PARAMS)
+engine = create_async_engine(SQLALCHEMY_DATABASE_URL, echo=False, **DATABASE_PARAMS)
 
 
 session_factory = async_sessionmaker(autoflush=False, autocommit=False, bind=engine, expire_on_commit=False)

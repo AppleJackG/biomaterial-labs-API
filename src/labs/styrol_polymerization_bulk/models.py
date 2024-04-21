@@ -25,5 +25,5 @@ class StyrolPolymerizationBulkORM(Base):
     polymer_characteristics_viscosity: Mapped[float] = mapped_column(nullable=True, default=None)
     polymer_characteristics_mol_mass: Mapped[float] = mapped_column(nullable=True, default=None)
 
-    user_id: Mapped[UUID] = mapped_column(ForeignKey('user.user_id'))
+    user_id: Mapped[UUID] = mapped_column(ForeignKey('user.user_id', ondelete="CASCADE"))
     user: Mapped["User"] = relationship(back_populates="styrol_polymerization_bulk")

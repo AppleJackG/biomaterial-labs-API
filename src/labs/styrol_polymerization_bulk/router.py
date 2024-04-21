@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 
-@router.post('/create_empty_row')
+@router.post('/create-empty-row')
 async def create_empty_row(
     row_number: int,
     user: User = Depends(user_service.get_current_user)

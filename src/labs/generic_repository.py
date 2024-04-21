@@ -1,5 +1,5 @@
 from typing import Generic, Type, TypeVar
-from uuid import UUID
+from uuid import UUID, uuid4
 from sqlalchemy import select, update, insert
 from pydantic import BaseModel
 
