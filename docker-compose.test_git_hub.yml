@@ -5,7 +5,7 @@ services:
     image: postgres:16
     container_name: db
     env_file:
-      - .env
+      - .env_git_hub
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
