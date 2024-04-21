@@ -23,7 +23,7 @@ services:
     stdin_open: true 
     tty: true
     env_file:
-      - .env.git_hub
+      - .env_git_hub
     container_name: biomaterial-labs-API
     depends_on:
       db:
