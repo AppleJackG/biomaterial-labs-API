@@ -1,5 +1,5 @@
 from typing import Any
-from fastapi import APIRouter, Depends, Header
+from fastapi import APIRouter, Depends, Header, Form
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
@@ -21,7 +21,7 @@ async def login(
 
 
 @auth_router.post('/refresh', response_model=Token)
-async def refresh_token(refresh_token: str = Header()):
+async def refresh_token(refresh_token: str = Form()):
     token = await auth_service.refresh_token(refresh_token)
     return token
 

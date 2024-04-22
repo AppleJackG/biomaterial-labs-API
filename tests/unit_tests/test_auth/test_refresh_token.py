@@ -3,7 +3,7 @@ from src.config import settings
 
 
 async def test_refresh_token(ac: AsyncClient, refresh_token):
-    response = await ac.post('/auth/refresh', headers={'refresh-token': refresh_token})
+    response = await ac.post('/auth/refresh', data={'refresh_token': refresh_token})
     assert response.status_code == 200
     assert response.json()['access_token'] is not None
     assert response.json()['refresh_token'] is not None
@@ -21,6 +21,6 @@ async def test_refresh_token_fake_token(ac: AsyncClient):
         'lc3Nfa2V5IjoiODVhMmQ5OGMtODNkMC00ZmI4LWFlOTYtNW'
         'IwMDMyNTViYjZhIn0.YtWtSN7tZBG-OXg4wVUHQNX_4LVX6'
         'iK-Qn-FX2d4TlU')
-    response = await ac.post('/auth/refresh', headers={'refresh-token': fake_refresh_token})
+    response = await ac.post('/auth/refresh', data={'refresh_token': fake_refresh_token})
     assert response.status_code == 403
     assert response.json()['detail'] == 'Invalid token error'

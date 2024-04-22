@@ -45,17 +45,16 @@ async def user() -> AsyncGenerator[User, None]:
     async with session_factory() as session:
         await session.delete(user)
         await session.commit()
-
-
+        
+        
 @pytest_asyncio.fixture(scope="function")
-async def inactive_user() -> AsyncGenerator[User, None]:
+async def user_teacher() -> AsyncGenerator[User, None]:
     user = User()
-    user.username = 'test_inactive_user'
+    user.username = 'test_user_teacher'
     user.password = auth_utils.hash_password('qwertyASD1')
     user.name = 'Олег'
     user.surname = 'Вацков'
-    user.is_active = False
-    user.role = 'student'
+    user.role = 'teacher'
     async with session_factory() as session:
         session.add(user)
         await session.commit()
@@ -89,6 +88,13 @@ async def super_user() -> AsyncGenerator[User, None]:
 async def access_token(user: User) -> str:
     access_key = uuid4()
     access_token = auth_utils.create_access_token(user, access_key)
+    return access_token
+
+
+@pytest_asyncio.fixture(scope="function")
+async def access_token_teacher(user_teacher: User) -> str:
+    access_key = uuid4()
+    access_token = auth_utils.create_access_token(user_teacher, access_key)
     return access_token
 
 

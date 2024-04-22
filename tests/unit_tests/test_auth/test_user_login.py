@@ -1,7 +1,29 @@
+from typing import AsyncGenerator
 from httpx import AsyncClient
+import pytest_asyncio
 from src.auth.models import User
 from src.config import settings
+from src.auth.utils import auth_utils
+from src.database import session_factory
 
+
+@pytest_asyncio.fixture(scope="function")
+async def inactive_user() -> AsyncGenerator[User, None]:
+    user = User()
+    user.username = 'test_inactive_user'
+    user.password = auth_utils.hash_password('qwertyASD1')
+    user.name = 'Олег'
+    user.surname = 'Вацков'
+    user.is_active = False
+    user.role = 'student'
+    async with session_factory() as session:
+        session.add(user)
+        await session.commit()
+        await session.refresh(user)
+    yield user
+    async with session_factory() as session:
+        await session.delete(user)
+        await session.commit()
 
 async def test_user_login(ac: AsyncClient, user: User):
     login_data = {

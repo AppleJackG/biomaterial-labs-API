@@ -12,5 +12,5 @@ async def test_logout(ac: AsyncClient, user: User):
     logout_response = await ac.post('/auth/logout', headers={'Authorization': f'Bearer {access_token}'})
     assert logout_response.status_code == 200
 
-    refresh_response = await ac.post('/auth/refresh', headers={'refresh-token': refresh_token})
+    refresh_response = await ac.post('/auth/refresh', data={'refresh_token': refresh_token})
     assert refresh_response.status_code == 403

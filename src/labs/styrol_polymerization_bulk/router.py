@@ -40,7 +40,7 @@ async def get_table_as_student(user: User = Depends(user_service.get_current_use
     return lab_dto
 
 
-@router.get('/get-as-teacher')
+@router.get('/get-as-teacher', dependencies=[Depends(user_service.get_current_user_teacher)])
 async def get_table_as_teacher(user_id: UUID) -> list[StyrolPolymerizationBulkDTO]:
     lab_dto = await styrol_polymerization_bulk_service.get_table(user_id)
     return lab_dto

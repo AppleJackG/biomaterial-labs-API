@@ -1,12 +1,15 @@
 from uuid import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, UniqueConstraint
 
 from ...database import Base
 
 
 class StyrolPolymerizationBulkORM(Base):
     __tablename__ = 'styrol_polymerization_bulk'
+    __table_args__ = (
+        UniqueConstraint('number', 'user_id'), 
+    )
     
     id: Mapped[int] = mapped_column(primary_key=True)
     number: Mapped[int] = mapped_column(nullable=True, default=None)
@@ -27,3 +30,5 @@ class StyrolPolymerizationBulkORM(Base):
 
     user_id: Mapped[UUID] = mapped_column(ForeignKey('user.user_id', ondelete="CASCADE"))
     user: Mapped["User"] = relationship(back_populates="styrol_polymerization_bulk")
+    
+    
