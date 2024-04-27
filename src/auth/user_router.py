@@ -1,6 +1,5 @@
 from typing import Any
 from fastapi import APIRouter, Depends, Form
-from fastapi.responses import JSONResponse
 
 from .models import User
 from .schemas import UserSchema, UserCreate, UserUpdate, UserSignUp

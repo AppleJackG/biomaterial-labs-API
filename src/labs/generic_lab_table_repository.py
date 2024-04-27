@@ -1,6 +1,6 @@
 from typing import Generic, Type, TypeVar
 from uuid import UUID, uuid4
-from sqlalchemy import select, update, insert
+from sqlalchemy import select, update, insert, delete
 from pydantic import BaseModel
 
 from ..database import Base, session_factory
@@ -10,7 +10,7 @@ ModelType = TypeVar("ModelType", bound=Base)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
-class GenericLabRepository(Generic[ModelType, UpdateSchemaType]):
+class GenericLabTableRepository(Generic[ModelType, UpdateSchemaType]):
     
     def __init__(self, model: Type[ModelType]) -> None:
         self.model = model
@@ -50,3 +50,14 @@ class GenericLabRepository(Generic[ModelType, UpdateSchemaType]):
             result = await session.execute(query)
             lab_orm = result.scalars()
         return lab_orm
+    
+    async def delete_row(self, row_number: int, user_id: UUID) -> None:
+        stmt = (
+            delete(self.model)
+            .where(self.model.user_id == user_id)
+            .where(self.model.number == row_number)
+        )
+        async with session_factory() as session:
+            await session.execute(stmt)
+            await session.commit()
+        return None

@@ -1,9 +1,9 @@
-from ..generic_repository import GenericLabRepository
+from ..generic_lab_table_repository import GenericLabTableRepository
 from .models import StyrolPolymerizationBulkORM
 from .schemas import StyrolPolymerizationBulkDTO
 
 
-class StyrolPolymerizationBulkRepository(GenericLabRepository[StyrolPolymerizationBulkORM, StyrolPolymerizationBulkDTO]):
+class StyrolPolymerizationBulkRepository(GenericLabTableRepository[StyrolPolymerizationBulkORM, StyrolPolymerizationBulkDTO]):
     pass
 
 styrol_polymerization_bulk_repository = StyrolPolymerizationBulkRepository(StyrolPolymerizationBulkORM)

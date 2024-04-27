@@ -1,7 +1,6 @@
 from typing import Any, Dict
 from uuid import UUID
 from fastapi import APIRouter, Depends
-from fastapi.responses import JSONResponse
 
 from .schemas import UserPatch, UserSchema, UserCreate
 from .service import user_service

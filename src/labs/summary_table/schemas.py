@@ -24,6 +24,7 @@ class LabAfterChangeDTO(BaseModel):
 
 class SummaryTableDTO(BaseModel):
     user_name_surname: str
+    user_id: UUID
     lab_summary_list: list[LabSummaryDTO]
     
     model_config = ConfigDict(from_attributes=True)

@@ -1,5 +1,6 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends
+from fastapi.responses import JSONResponse
 
 from ...auth.models import User
 from ...auth.service import user_service
@@ -32,6 +33,15 @@ async def update_table(
         user
     )
     return lab_dto
+
+
+@router.delete('/')
+async def delete_row(
+    row_number: int, 
+    user: User = Depends(user_service.get_current_user)
+) -> JSONResponse:
+    await styrol_polymerization_bulk_service.delete_row(row_number, user)
+    return JSONResponse({'message': 'successful delete'})
 
 
 @router.get('/get-as-student')

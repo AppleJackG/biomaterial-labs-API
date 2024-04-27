@@ -29,6 +29,4 @@ async def refresh_token(refresh_token: str = Form()):
 @auth_router.post('/logout')
 async def logout(user: UserSchema = Depends(user_service.get_current_user)) -> JSONResponse:
     await auth_service.logout(user)
-    return {
-        'message': 'successful logout'
-    }
+    return JSONResponse({'message': 'successful logout'})

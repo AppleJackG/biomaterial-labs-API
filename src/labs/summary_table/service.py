@@ -34,6 +34,7 @@ class SummaryTableService:
                 
             summary_table_dto = SummaryTableDTO(
                 user_name_surname=f'{row.user.name} {row.user.surname}',
+                user_id=row.user_id,
                 lab_summary_list=lab_summary_list
             )
             
