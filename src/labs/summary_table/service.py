@@ -25,7 +25,7 @@ class SummaryTableService:
         for row in summary_table_orm_list:
             
             lab_summary_list: list[LabSummaryDTO] = []
-            for lab_name in LabNamesEnRu:
+            for lab_name in LabNamesEn:
                 lab_summary = LabSummaryDTO(
                     name=lab_name.value,
                     status_or_mark=getattr(row, lab_name.name)
